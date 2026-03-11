@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+src/evaluate_kine.py
+src/kine_2d.py
+src/place_stone_2d.py
+src/rotate_stone.py
+src/test_example5.py
+src/StableStacking2D.egg-info/PKG-INFO
+src/StableStacking2D.egg-info/SOURCES.txt
+src/StableStacking2D.egg-info/dependency_links.txt
+src/StableStacking2D.egg-info/requires.txt
+src/StableStacking2D.egg-info/top_level.txt

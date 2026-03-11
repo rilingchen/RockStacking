@@ -1,0 +1,5 @@
+evaluate_kine
+kine_2d
+place_stone_2d
+rotate_stone
+test_example5
