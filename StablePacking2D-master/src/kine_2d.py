@@ -7,6 +7,8 @@ import mosek
 import math
 import random
 print_detail = False
+# Hard cap on each MOSEK optimization call to avoid blocking placement in GH.
+SOLVER_TIME_LIMIT_SEC = 2.0
 color = ["#"+''.join([random.choice('0123456789ABCDEF') for j in range(6)])
              for i in range(1000)]
 
@@ -202,6 +204,13 @@ def solve_force_rigid(elems, contps, Aglobal):
             # Attach a log stream printer to the task
             if print_detail:
                 task.set_Stream(mosek.streamtype.log, streamprinter)
+
+            # Keep KA evaluation responsive when called repeatedly per rotation.
+            try:
+                task.putdouparam(mosek.dparam.optimizer_max_time, SOLVER_TIME_LIMIT_SEC)
+            except Exception:
+                # Older/newer MOSEK bindings may expose params differently.
+                pass
 
             # Bound keys and values for constraints -- force equilibrium
             bkc = []

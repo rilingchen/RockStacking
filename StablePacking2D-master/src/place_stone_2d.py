@@ -377,6 +377,8 @@ def get_best_placement(wall, wall_seg_matrix,stone, rotation_angle_options,elems
     return best_rotate_pose_index, best_score, best_loc,best_direction
 
 def save_matrix(matrix,file_full_name,with_label = True):
+    # Disabled for Grasshopper: avoids matplotlib memory leaks and disk I/O
+    return
     tab20_cm = cm.get_cmap('tab20')
     newcolors = np.concatenate([tab20_cm(np.linspace(0, 1, 20))] * 13, axis=0)
     white = np.array([255/256, 255/256, 255/256, 1])
@@ -477,9 +479,9 @@ def generate_one_wall_best_pose_given_sequence(wall_i, result_dir=None, sequence
             transformation[i, 0] = best_loc[1]+translation[1]
             transformation[i, 2] = rotation_angle_options[best_rotate_pose_index]
             transformation[i, 3] = 1
-            # write image to file
-            cv2.imwrite(result_dir+f'/wall_{wall_i}_iteration{i}_valid_stone_{stone_index}_best_pose_random_sequence.png',transformed_stone)
-            save_matrix(transformed_stone,result_dir+f'/wall_{wall_i}_iteration{i}_valid_stone_{stone_index}_best_pose_random_sequence_id.png')
+            # write image to file (disabled for Grasshopper)
+            # cv2.imwrite(result_dir+f'/wall_{wall_i}_iteration{i}_valid_stone_{stone_index}_best_pose_random_sequence.png',transformed_stone)
+            # save_matrix(transformed_stone,result_dir+f'/wall_{wall_i}_iteration{i}_valid_stone_{stone_index}_best_pose_random_sequence_id.png')
             #update wall
             wall += transformed_stone
             wall_id_matrix += (wall_i*100+i+1)*transformed_stone
@@ -493,13 +495,13 @@ def generate_one_wall_best_pose_given_sequence(wall_i, result_dir=None, sequence
             print("No feasible placement")
             # add stone to unplaced stones
             unplaced_stones.append(stone_index)
-    # write time record to txt file with column name
-    np.savetxt(result_dir+f'/wall_{wall_i}_best_pose_given_sequence_time_record.txt',recorded_time,delimiter=',',header='iteration, nb_rotation, search_time, ka_time',comments='')
+    # write time record to txt file with column name (disabled for Grasshopper)
+    # np.savetxt(result_dir+f'/wall_{wall_i}_best_pose_given_sequence_time_record.txt',recorded_time,delimiter=',',header='iteration, nb_rotation, search_time, ka_time',comments='')
 
-    # save image of the wall as figures
-    cv2.imwrite(result_dir+f'/wall_{wall_i}_best_pose_random_sequence.png', wall)
-    save_matrix(stone_index_matrix,result_dir+f'/wall_{wall_i}_best_pose_random_sequence_id.png')
-    save_matrix(wall_id_matrix, result_dir+f'/wall_{wall_i}_with_sequence.png')
+    # save image of the wall as figures (disabled for Grasshopper)
+    # cv2.imwrite(result_dir+f'/wall_{wall_i}_best_pose_random_sequence.png', wall)
+    # save_matrix(stone_index_matrix,result_dir+f'/wall_{wall_i}_best_pose_random_sequence_id.png')
+    # save_matrix(wall_id_matrix, result_dir+f'/wall_{wall_i}_with_sequence.png')
     return {"wall_id":wall_i, "unplaced_stones":unplaced_stones,"wall":wall,"wall_id_matrix":wall_id_matrix,"stone_index_matrix":stone_index_matrix,"elems":elems,"contps":contps,"transformation":transformation}
 
 def generate_one_wall_best_pose_given_sequence_given_wall(wall_i,wall, wall_id_matrix,stone_index_matrix,elems,contps,result_dir=None, sequence=None, stones=None, wall_size=None,rotation_angle_options = None,weight_height = 1,nb_processor = 1,relaxed_mason_criteria = False,allowed_realxed_placement=0):
@@ -544,9 +546,9 @@ def generate_one_wall_best_pose_given_sequence_given_wall(wall_i,wall, wall_id_m
             transformation[i, 0] = best_loc[1]+translation[1]
             transformation[i, 2] = rotation_angle_options[best_rotate_pose_index]
             transformation[i, 3] = 1
-            # write image to file
-            cv2.imwrite(result_dir+f'/wall_{wall_i}_iteration{i}_valid_stone_{stone_index}_best_pose_random_sequence.png',transformed_stone)
-            save_matrix(transformed_stone,result_dir+f'/wall_{wall_i}_iteration{i}_valid_stone_{stone_index}_best_pose_random_sequence_id.png')
+            # write image to file (disabled for Grasshopper)
+            # cv2.imwrite(result_dir+f'/wall_{wall_i}_iteration{i}_valid_stone_{stone_index}_best_pose_random_sequence.png',transformed_stone)
+            # save_matrix(transformed_stone,result_dir+f'/wall_{wall_i}_iteration{i}_valid_stone_{stone_index}_best_pose_random_sequence_id.png')
             #update wall
             wall += transformed_stone
             wall_id_matrix += (starting_index+i+1)*transformed_stone
@@ -560,12 +562,12 @@ def generate_one_wall_best_pose_given_sequence_given_wall(wall_i,wall, wall_id_m
             print("No feasible placement")
             # add stone to unplaced stones
             unplaced_stones.append(stone_index)
-    # write time record to txt file with column name
-    np.savetxt(result_dir+f'/wall_{wall_i}_best_pose_given_sequence_time_record.txt',recorded_time,delimiter=',',header='iteration, nb_rotation, search_time, ka_time',comments='')
+    # write time record to txt file with column name (disabled for Grasshopper)
+    # np.savetxt(result_dir+f'/wall_{wall_i}_best_pose_given_sequence_time_record.txt',recorded_time,delimiter=',',header='iteration, nb_rotation, search_time, ka_time',comments='')
 
-    # save image of the wall as figures
-    cv2.imwrite(result_dir+f'/wall_{wall_i}_best_pose_random_sequence.png', wall)
-    save_matrix(stone_index_matrix,result_dir+f'/wall_{wall_i}_best_pose_random_sequence_id.png')
-    save_matrix(wall_id_matrix, result_dir+f'/wall_{wall_i}_with_sequence.png')
+    # save image of the wall as figures (disabled for Grasshopper)
+    # cv2.imwrite(result_dir+f'/wall_{wall_i}_best_pose_random_sequence.png', wall)
+    # save_matrix(stone_index_matrix,result_dir+f'/wall_{wall_i}_best_pose_random_sequence_id.png')
+    # save_matrix(wall_id_matrix, result_dir+f'/wall_{wall_i}_with_sequence.png')
     return {"wall_id":wall_i, "unplaced_stones":unplaced_stones,"wall":wall,"wall_id_matrix":wall_id_matrix,"stone_index_matrix":stone_index_matrix,"elems":elems,"contps":contps,"transformation":transformation}
-    
+
